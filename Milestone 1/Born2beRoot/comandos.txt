@@ -1,0 +1,34 @@
+- Obtener signature: shasum *nombre*.vdi
+- Comprobar interfaz grafica: ls /usr/bin/*session
+- Sistema operativo: uname -v
+- Particiones: lsblk
+- Reiniciar la máquina: sudo reboot
+
+- Mirar los grupos: getent group *name*
+- Agregar usuario: sudo adduser *name*
+- Agregar grupo: sudo addgroup *name*
+- Añadir usuario al grupo: sudo adduser *user* *group*
+
+- Comprobar hostname; hostname
+- Cambiar hostname: sudo nano /etc/hostname && sudo nano /etc/hosts
+
+- Ver si sudo esta instalado: which sudo // dpkg -s sudo
+- Reglas impuestas para sudo: sudo /etc/sudoers.d/sudo_config
+
+- Ver si UFW esta instalado: dpkg -s ufw
+- UFW en uso: sudo service ufw status
+- Añadir regla puerto: sudo ufw allow *port*
+- Borrar regla puerto: sudo ufw delete *posición en la lista port*
+
+- Ver si SSH está instalado: which ssh
+- SSH en uso: sudo service ssh status
+- Conectarnos por SSH: ssh user@localhost -p *port*
+
+- Modificar script: sudo crontab -u root -e
+- Parar/Reanudar el script sin modificarlo: sudo /etc/init.d/cron stop||start
+
+APT es un administrador de paquetes de nivel inferior y aptitude es un administrador de paquetes de alto nivel.
+
+APPArmor es un módulo de seguridad del kernel Linux 
+
+LVM es un gestor de volúmenes lógicos. Para asignar espacio en dispositivos de almacenamiento
