@@ -51,10 +51,29 @@ void	size_3(t_data *data)
 
 void	size_4(t_data *data)
 {
-	
+	int	pos;
+
+	pos = find_min_pos(data->a);
+	move_to_top_a(data, pos, 4);
+	push_b(data);
+	size_3(data);
+	push_a(data);
 }
 
-void	size_5(t_data *data)
+
+void	size_5(t_data* data)
 {
-	
+	int	pos;
+
+	pos = find_min_pos(data->a);
+	move_to_top_a(data, pos, 5);
+	push_b(data);
+
+	pos = find_min_pos(data->a);
+	move_to_top_a(data, pos, 4);
+	push_b(data);
+	size_3(data);
+	push_a(data);
+	push_a(data);
 }
+

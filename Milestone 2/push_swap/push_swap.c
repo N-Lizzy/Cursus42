@@ -26,23 +26,29 @@ int	main(int argc, char **args)
 			return (0);
 		size = stack_size(data.a);
 		aux_main(&data, size);
+		free_list(&data.a);
+		free_list(&data.b);
 	}
 	return (0);
 }
 
 void	aux_main(t_data *data, int size)
 {
+	if (is_sorted(data->a))
+		return;
 	if (size == 2)
 		size_2(data);
 	else if (size == 3)
 		size_3(data);
-	else if (size == 3)
+	else if (size == 4)
 		size_4(data);
-	else if (size == 3)
+	else if (size == 5)
 		size_5(data);
 	else
-		ft_printf("Tlabaja.");
-
+	{
+		index_stack(data);
+		radix_sort(data);
+	}
 	print_stack(data->a);
 }
 

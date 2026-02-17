@@ -60,6 +60,8 @@ int		stack_size(t_stack *stack);
 // Sort
 void	size_2(t_data *data);
 void	size_3(t_data *data);
+void	size_4(t_data* data);
+void	size_5(t_data* data);
 
 // Free
 void	free_split(char **split);

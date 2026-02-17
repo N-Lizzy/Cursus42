@@ -43,6 +43,8 @@ void	add_back(t_stack **stack, int nb)
 	t_stack	*new;
 	t_stack	*tmp;
 
+	if (isduplicate(*stack, nb))
+		error_duplicated(*stack);
 	new = malloc(sizeof(t_stack));
 	if (!new)
 		exit(1);
@@ -64,14 +66,29 @@ int	isnumber(char *nb)
 	int	i;
 
 	i = 0;
-	if (nb[0] == '-')
+	if (!nb || !nb[0])
+		return (0);
+	if (nb[i] == '-' || nb[i] == '+')
 		i++;
+	if (!nb[i])
+		return (0);
 	while (nb[i])
 	{
-		if (ft_isdigit(nb[i]))
-			i++;
-		else
+		if (!ft_isdigit(nb[i]))
 			return (0);
+		i++;
 	}
 	return (1);
 }
+
+int	isduplicate(t_stack* stack, int nb)
+{
+	while (stack)
+	{
+		if (stack->nb == nb)
+			return (1);
+		stack = stack->next;
+	}
+	return (0);
+}
+

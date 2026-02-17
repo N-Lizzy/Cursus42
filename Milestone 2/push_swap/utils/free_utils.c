@@ -44,6 +44,13 @@ void	free_list(t_stack **stack)
 	*stack = NULL;
 }
 
+void error_duplicated(t_stack** stack)
+{
+	free_list(stack);
+	ft_printf("Error \n");
+	exit(1);
+}
+
 void	error_free(t_data *data)
 {
 	free_list(&data->a);
