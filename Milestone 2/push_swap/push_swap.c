@@ -6,7 +6,7 @@
 /*   By: aruiznav <aruiznav@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 11:01:17 by aruiznav          #+#    #+#             */
-/*   Updated: 2026/02/10 13:26:15 by aruiznav         ###   ########.fr       */
+/*   Updated: 2026/02/25 12:12:15 by aruiznav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,15 @@ int	main(int argc, char **args)
 		free_list(&data.a);
 		free_list(&data.b);
 	}
+	else
+		ft_printf("Error \n");
 	return (0);
 }
 
 void	aux_main(t_data *data, int size)
 {
 	if (is_sorted(data->a))
-		return;
+		return ;
 	if (size == 2)
 		size_2(data);
 	else if (size == 3)
@@ -49,19 +51,4 @@ void	aux_main(t_data *data, int size)
 		index_stack(data);
 		radix_sort(data);
 	}
-	print_stack(data->a);
 }
-
-// BORRAR BORRAR BORRAR BORRAR
-void print_stack(t_stack *stack)
-{
-    t_stack *current = stack;
-
-	ft_printf("Stack ordenado:\n");
-    while (current != NULL)
-    {
-        ft_printf("%d\n", current->nb);
-        current = current->next;
-    }
-}
-// BORRAR BORRAR BORRAR BORRAR

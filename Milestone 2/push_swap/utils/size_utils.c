@@ -6,7 +6,7 @@
 /*   By: aruiznav <aruiznav@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 10:00:13 by aruiznav          #+#    #+#             */
-/*   Updated: 2026/02/10 13:26:42 by aruiznav         ###   ########.fr       */
+/*   Updated: 2026/02/24 10:44:40 by aruiznav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	size_2(t_data *data)
 
 void	size_3(t_data *data)
 {
-	long	a;
-	long	b;
-	long	c;
-	
+	int	a;
+	int	b;
+	int	c;
+
 	if (!data->a || !data->a->next || !data->a->next->next)
 		return ;
 	a = data->a->nb;
@@ -60,15 +60,13 @@ void	size_4(t_data *data)
 	push_a(data);
 }
 
-
-void	size_5(t_data* data)
+void	size_5(t_data *data)
 {
 	int	pos;
 
 	pos = find_min_pos(data->a);
 	move_to_top_a(data, pos, 5);
 	push_b(data);
-
 	pos = find_min_pos(data->a);
 	move_to_top_a(data, pos, 4);
 	push_b(data);
@@ -76,4 +74,3 @@ void	size_5(t_data* data)
 	push_a(data);
 	push_a(data);
 }
-

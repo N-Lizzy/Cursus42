@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   radix.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aruiznav <aruiznav@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/20 11:12:49 by aruiznav          #+#    #+#             */
+/*   Updated: 2026/02/20 12:15:50 by aruiznav         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-void	radix_sort(t_data* data)
+void	radix_sort(t_data *data)
 {
 	int	i;
 	int	j;
@@ -27,7 +39,7 @@ void	radix_sort(t_data* data)
 	}
 }
 
-int	get_max_bits(t_stack* stack)
+int	get_max_bits(t_stack *stack)
 {
 	int	max;
 	int	bits;
@@ -45,17 +57,12 @@ int	get_max_bits(t_stack* stack)
 	return (bits);
 }
 
-void	index_stack(t_data* data)
+void	sort_array(int *arr, int size)
 {
-	int* arr;
-	int		size;
-	t_stack* tmp;
-	int		i;
-	int		j;
-	int		swap;
+	int	i;
+	int	j;
+	int	swap;
 
-	size = stack_size(data->a);
-	arr = stack_to_array(data->a, size);
 	i = 0;
 	while (i < size - 1)
 	{
@@ -72,7 +79,14 @@ void	index_stack(t_data* data)
 		}
 		i++;
 	}
-	tmp = data->a;
+}
+
+void	assign_indexes(t_stack *stack, int *arr, int size)
+{
+	t_stack	*tmp;
+	int		i;
+
+	tmp = stack;
 	while (tmp)
 	{
 		i = 0;
@@ -81,31 +95,22 @@ void	index_stack(t_data* data)
 			if (tmp->nb == arr[i])
 			{
 				tmp->nb = i;
-				break;
+				break ;
 			}
 			i++;
 		}
 		tmp = tmp->next;
 	}
+}
+
+void	index_stack(t_data *data)
+{
+	int		*arr;
+	int		size;
+
+	size = stack_size(data->a);
+	arr = stack_to_array(data->a, size);
+	sort_array(arr, size);
+	assign_indexes(data->a, arr, size);
 	free(arr);
 }
-
-int* stack_to_array(t_stack* a, int size)
-{
-	int* arr;
-	int	i;
-
-	arr = malloc(sizeof(int) * size);
-	if (!arr)
-		exit(1);
-	i = 0;
-	while (a)
-	{
-		arr[i++] = a->nb;
-		a = a->next;
-	}
-	return (arr);
-}
-
-
-

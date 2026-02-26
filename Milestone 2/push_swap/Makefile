@@ -20,7 +20,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 SRC = \
 push_swap.c \
 $(OP)push.c $(OP)reverse_rotate.c $(OP)rotate.c $(OP)swap.c \
-$(UTILS)free_utils.c $(UTILS)parse_utils.c $(UTILS)size_utils.c $(UTILS)utils.c
+$(UTILS)free_utils.c $(UTILS)parse_utils.c $(UTILS)radix.c $(UTILS)size_utils.c $(UTILS)utils.c
 
 OBJ = $(SRC:%.c=$(OBJDIR)%.o)
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_things.c                                      :+:      :+:    :+:   */
+/*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aruiznav <aruiznav@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 12:16:12 by aruiznav          #+#    #+#             */
-/*   Updated: 2026/01/28 11:44:14 by aruiznav         ###   ########.fr       */
+/*   Updated: 2026/02/24 10:35:29 by aruiznav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@ void	free_list(t_stack **stack)
 	*stack = NULL;
 }
 
-void error_duplicated(t_stack** stack)
+void	error_duplicated(t_stack **stack, char **split)
 {
+	free_split(split);
 	free_list(stack);
 	ft_printf("Error \n");
 	exit(1);
