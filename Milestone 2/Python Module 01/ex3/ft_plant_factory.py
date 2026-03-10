@@ -1,10 +1,10 @@
 class Plant:
-    def __init__(self, name, height, age):
+    def __init__(self, name: str, height: int, age: int) -> None:
         self.name = name
         self.height = height
         self.age = age
 
-    def get_info(self):
+    def get_info(self) -> None:
         print(f"Created: {self.name} ({self.height}cm, {self.age} days)")
 
 
@@ -14,7 +14,7 @@ plants_list = [
     ("Cactus", 5, 90),
     ("Sunflower", 80, 45),
     ("Fern", 15, 120)]
-i = 0
+i: int = 0
 
 if __name__ == "__main__":
     print("=== Plant Factory Output ===")

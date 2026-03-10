@@ -1,6 +1,6 @@
-name = "Rose"
-height = "25cm"
-age = "30 days"
+name: str = "Rose"
+height: int = "25cm"
+age: int = "30 days"
 
 if __name__ == "__main__":
     print("=== Welcome to My Garden ===")

@@ -1,63 +1,64 @@
 class Plant:
-    def __init__(self, name, height):
+    def __init__(self, name: str, height: int) -> None:
         self.name = name
         self.height = height
-        self.initial_height = height
+        self.initial_height: int = height
 
-    def grow(self):
+    def grow(self) -> None:
         self.height += 1
         print(f"{self.name} grew 1cm")
 
-    def growth(self):
-        return self.height - self.start_height
+    def growth(self) -> int:
+        return self.height - self.initial_height
 
-    def type_name(self):
+    def type_name(self) -> str:
         return "regular"
 
-    def get_info(self):
+    def get_info(self) -> str:
         return (f"{self.name}: {self.height}cm")
 
 
 class FloweringPlant(Plant):
-    def __init__(self, name, height, color):
+    def __init__(self, name: str, height: int, color: str) -> None:
         super().__init__(name, height)
         self.color = color
 
-    def type_name(self):
+    def type_name(self) -> str:
         return "flowering"
 
-    def get_info(self):
+    def get_info(self) -> str:
         return (f"{self.name}: {self.height}cm, {self.color} flowers "
                 f"(blooming)")
 
 
 class PrizeFlower(FloweringPlant):
-    def __init__(self, name, height, color, prize_points):
+    def __init__(self, name: str, height: int, color: str,
+                 prize_points: int) -> None:
         super().__init__(name, height, color)
         self.prize_points = prize_points
 
-    def type_name(self):
+    def type_name(self) -> str:
         return "prize flowers"
 
-    def get_info(self):
+    def get_info(self) -> str:
         return (f"{self.name}: {self.height}cm, {self.color} flowers"
                 f" (blooming), Prize points: {self.prize_points}")
 
 
 class GardenManager:
-    total_gardens = 0
+    total_gardens: int = 0
 
-    def __init__(self, owner):
+    def __init__(self, owner: str):
         self.owner = owner
-        self.plants = []
+        self.plants: list[Plant] = []
         GardenManager.total_gardens += 1
 
     @classmethod
-    def create_garden_network(cls):
+    def create_garden_network(cls) -> None:
         print(f"Total gardens managed: {cls.total_gardens}")
 
     @staticmethod
-    def check_height(height):
+    def check_height(height: int) -> bool:
         return height >= 0
 
     def add_plant(self, plant: Plant):
@@ -67,34 +68,35 @@ class GardenManager:
         self.plants.append(plant)
         print(f"Added {plant.name} to {self.owner}'s garden")
 
-    def grow_plants(self):
+    def grow_plants(self) -> None:
         print(f"{self.owner} is helping all plants grow...")
         for plant in self.plants:
             plant.grow()
 
     class GardenStats:
         @staticmethod
-        def total_plants(plants):
-            total_plants = 0
+        def total_plants(plants: list[Plant]) -> int:
+            total_plants: int = 0
             for plant in plants:
                 total_plants += 1
             return total_plants
 
         @staticmethod
-        def total_growth(plants):
-            total_height = 0
+        def total_growth(plants: list[Plant]) -> int:
+            total_height: int = 0
             for plant in plants:
                 total_height += (plant.height - plant.initial_height)
             return total_height
 
-        def count_types(plants, type: str):
-            total_type = 0
+        @staticmethod
+        def count_types(plants: list[Plant], type: str) -> int:
+            total_type: int = 0
             for plant in plants:
                 if (plant.type_name() == type):
                     total_type += 1
             return total_type
 
-    def garden_report(self):
+    def garden_report(self) -> None:
         print(f"=== {self.owner}'s Garden Report ===")
         print("Plants in garden: ")
         for plant in self.plants:
@@ -110,8 +112,8 @@ class GardenManager:
               f"{self.GardenStats.count_types(self.plants, 'prize flowers')}"
               f" prize flowers")
 
-    def calculate_score(self):
-        final_score = 0
+    def calculate_score(self) -> int:
+        final_score: int = 0
         for plant in self.plants:
             final_score += plant.height
             if plant.type_name() == "prize flowers":
