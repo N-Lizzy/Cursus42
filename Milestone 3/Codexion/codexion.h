@@ -6,7 +6,7 @@
 /*   By: aruiznav <aruiznav@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 17:10:48 by aruiznav          #+#    #+#             */
-/*   Updated: 2026/08/18 17:41:37 by aruiznav         ###   ########.fr       */
+/*   Updated: 2026/08/18 17:58:48 by aruiznav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ typedef struct s_coder
 {
 	int				id;
 	struct s_hub	*hub;
-	long			last_code;
-	long			num_codes;
+	long			last_compile;
+	long			compiles;
 	t_dongle		*left_dongle;
 	t_dongle		*right_dongle;
 	pthread_mutex_t	cmutex;
@@ -43,7 +43,7 @@ typedef struct s_hub
 	long			tcompile;
 	long			tdebug;
 	long			trefactor;
-	long			num_compiles;
+	long			max_compiles;
 	char*			scheduler;
 	int				status;
 	pthread_t		*threads;
