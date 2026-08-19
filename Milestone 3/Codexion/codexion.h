@@ -14,13 +14,13 @@
 # define CODEXION_H
 
 # include <stdio.h>
+# include <string.h>
 # include <pthread.h>
 
 typedef struct s_dongle
 {
 	int				is_taken;
 	long			last_used;
-	long			cooldown;
 	pthread_mutex_t	dmutex;
 }	t_dongle;
 
@@ -37,20 +37,26 @@ typedef struct s_coder
 
 typedef struct s_hub
 {
+	int				status;
 	int				num_coders;
 	long			htime;
 	long			tburnout;
 	long			tcompile;
 	long			tdebug;
 	long			trefactor;
+	long			tcooldown;
 	long			max_compiles;
 	char*			scheduler;
-	int				status;
 	pthread_t		*threads;
 	t_coder			*coders;
 	t_dongle		*dongles;
-	pthread_mutex_t	*smutex;
-	pthread_mutex_t	*wmutex;
+	pthread_mutex_t	smutex;
+	pthread_mutex_t	wmutex;
 }	t_hub;
+
+int		setHub(t_hub *hub, char **argv);
+
+int		check_numarg(char *argv);
+char	*check_scheduler(char *argv);
 
 #endif

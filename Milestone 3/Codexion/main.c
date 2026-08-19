@@ -25,10 +25,14 @@
 				(last_compile_start + time_to_burnout)
 */
 
+#include "codexion.h"
+
 int	main(int argc, char **argv)
 {
+	t_hub hub;
+
 	if (argc != 9)
 		return (1);
+	if (setHub(&hub, argv))
+		return (1);
 }
-
-
