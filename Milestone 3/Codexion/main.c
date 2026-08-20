@@ -6,7 +6,7 @@
 /*   By: aruiznav <aruiznav@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 17:10:57 by aruiznav          #+#    #+#             */
-/*   Updated: 2026/08/18 18:01:12 by aruiznav         ###   ########.fr       */
+/*   Updated: 2026/08/20 17:00:27 by aruiznav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@
 
 int	main(int argc, char **argv)
 {
-	t_hub hub;
+	t_hub	hub;
 
 	if (argc != 9)
 		return (1);
-	if (setHub(&hub, argv))
+	if (set_hub(&hub, argv))
 		return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: aruiznav <aruiznav@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 17:10:48 by aruiznav          #+#    #+#             */
-/*   Updated: 2026/08/18 17:58:48 by aruiznav         ###   ########.fr       */
+/*   Updated: 2026/08/20 17:57:57 by aruiznav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdio.h>
 # include <string.h>
+#include <stdlib.h>
 # include <pthread.h>
 
 typedef struct s_dongle
@@ -46,7 +47,7 @@ typedef struct s_hub
 	long			trefactor;
 	long			tcooldown;
 	long			max_compiles;
-	char*			scheduler;
+	char			*scheduler;
 	pthread_t		*threads;
 	t_coder			*coders;
 	t_dongle		*dongles;
@@ -54,9 +55,12 @@ typedef struct s_hub
 	pthread_mutex_t	wmutex;
 }	t_hub;
 
-int		setHub(t_hub *hub, char **argv);
+int		set_hub(t_hub *hub, char **argv);
 
 int		check_numarg(char *argv);
 char	*check_scheduler(char *argv);
+
+void	destroy_dongles(t_hub *hub, int i);
+void	destroy_coders(t_hub *hub, int i);
 
 #endif

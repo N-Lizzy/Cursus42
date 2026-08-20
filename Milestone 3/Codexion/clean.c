@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aruiznav <aruiznav@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/20 16:23:32 by aruiznav          #+#    #+#             */
-/*   Updated: 2026/08/20 16:49:20 by aruiznav         ###   ########.fr       */
+/*   Created: 2026/08/20 17:56:59 by aruiznav          #+#    #+#             */
+/*   Updated: 2026/08/20 17:57:31 by aruiznav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-int	check_numarg(char *argv)
+void	destroy_dongles(t_hub *hub, int i)
 {
-	int	i;
-
-	i = 0;
-	while (argv[i])
-	{
-		if (argv[i] < '0' || argv[i] > '9')
-			return (1);
-		i++;
-	}
-	return (0);
+	while (--i >= 0)
+		pthread_mutex_destroy(&hub->dongles[i].dmutex);
+	free(hub->dongles);
 }
 
-char	*check_scheduler(char *argv)
+void	destroy_coders(t_hub *hub, int i)
 {
-	if ((strcmp(argv, "fifo") == 0) || (strcmp(argv, "edf") == 0))
-		return (argv);
-	return (NULL);
+	while (--i >= 0)
+		pthread_mutex_destroy(&hub->coders[i].cmutex);
+	free(hub->coders);
 }
