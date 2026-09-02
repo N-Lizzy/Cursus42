@@ -92,3 +92,31 @@ int	main(int argc, char **argv)
 	print_hub(&hub);
 	return (0);
 }
+
+
+
+void	*routine(void *param)
+{
+	t_philo	*philo;
+
+	philo = param;
+	if (philo->id % 2)
+		start_thinking(philo);
+	while (!get_status(philo->table))
+	{
+		while (take_fork(philo, 1))
+			;
+		while (take_fork(philo, 0))
+			;
+		if (get_status(philo->table))
+			return (NULL);
+		if (ph_eat(philo) || get_status(philo->table))
+			return (NULL);
+		print_status(philo->table, philo->id, 's');
+		usleep(philo->table->tsleep * 1000);
+		if (get_status(philo->table))
+			return (NULL);
+		print_status(philo->table, philo->id, 't');
+	}
+	return (NULL);
+}

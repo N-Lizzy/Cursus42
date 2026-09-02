@@ -6,7 +6,7 @@
 /*   By: aruiznav <aruiznav@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 17:10:48 by aruiznav          #+#    #+#             */
-/*   Updated: 2026/08/20 17:57:57 by aruiznav         ###   ########.fr       */
+/*   Updated: 2026/09/02 19:51:50 by aruiznav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 # include <stdio.h>
 # include <string.h>
-#include <stdlib.h>
+# include <stdlib.h>
 # include <pthread.h>
+# include <sys/time.h>
 
 typedef struct s_dongle
 {
@@ -36,6 +37,20 @@ typedef struct s_coder
 	pthread_mutex_t	cmutex;
 }	t_coder;
 
+typedef struct s_request
+{
+	t_coder		*coder;
+	long		order;
+	long		deadline;
+}	t_request;
+
+typedef struct s_heap
+{
+	t_request	*data;
+	int			size;
+	int			capacity;
+}	t_heap;
+
 typedef struct s_hub
 {
 	int				status;
@@ -51,11 +66,31 @@ typedef struct s_hub
 	pthread_t		*threads;
 	t_coder			*coders;
 	t_dongle		*dongles;
+	long			request_order;
+	t_heap			heap;
 	pthread_mutex_t	smutex;
 	pthread_mutex_t	wmutex;
+	pthread_cond_t	scond;
 }	t_hub;
 
-int		set_hub(t_hub *hub, char **argv);
+int			set_hub(t_hub *hub, char **argv);
+int			set_arg(t_hub *hub, char **argv);
+int			set_dongles(t_hub *hub);
+int			set_coders(t_hub *hub);
+int			set_coder(t_hub *hub, int i);
+
+int			set_sync(t_hub *hub);
+int			set_heap(t_hub *hub);
+
+int			heap_push(t_hub *hub, t_request request);
+int			heap_pop(t_hub *hub, t_request *request);
+
+t_request	make_request(t_hub *hub, t_coder *coder);
+int			request_compile(t_coder *coder);
+int			is_my_turn(t_coder *coder);
+int			wait_for_turn(t_coder *coder);
+int			take_turn(t_coder *coder);
+
 
 int		check_numarg(char *argv);
 char	*check_scheduler(char *argv);

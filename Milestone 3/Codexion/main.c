@@ -6,7 +6,7 @@
 /*   By: aruiznav <aruiznav@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 17:10:57 by aruiznav          #+#    #+#             */
-/*   Updated: 2026/08/20 17:00:27 by aruiznav         ###   ########.fr       */
+/*   Updated: 2026/09/02 19:00:50 by aruiznav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,27 @@
 int	main(int argc, char **argv)
 {
 	t_hub	hub;
+	int		i;
 
+	i = 0;
 	if (argc != 9)
 		return (1);
 	if (set_hub(&hub, argv))
 		return (1);
+	hub.htime = get_time(0);
+	while (i < hub.num_coders)
+	{
+		//if(pthread_create(&hub.threads[i], NULL, &coder_routine, &hub.coders[i]))
+			// Return limpieza
+		i++;
+	}
+	// Checkeo
+	i = 0;
+	while(i < hub.num_coders)
+	{
+		if(pthread_join(hub.threads[i], NULL))
+		i++;
+	}
+	// Limpieza
+	return (0);
 }
