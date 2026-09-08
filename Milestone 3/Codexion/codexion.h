@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <pthread.h>
 # include <sys/time.h>
+# include <unistd.h>
 
 typedef struct s_dongle
 {
@@ -73,6 +74,8 @@ typedef struct s_hub
 	pthread_cond_t	scond;
 }	t_hub;
 
+void		log_state(t_hub *hub, int id, char *msg);
+
 int			set_hub(t_hub *hub, char **argv);
 int			set_arg(t_hub *hub, char **argv);
 int			set_dongles(t_hub *hub);
@@ -87,15 +90,19 @@ int			heap_pop(t_hub *hub, t_request *request);
 
 t_request	make_request(t_hub *hub, t_coder *coder);
 int			request_compile(t_coder *coder);
-int			is_my_turn(t_coder *coder);
-int			wait_for_turn(t_coder *coder);
+int			is_my_turn(t_coder *coder); 
 int			take_turn(t_coder *coder);
 
+int			take_dongles(t_coder *coder);
+int			release_dongles(t_coder *coder);
+long		get_time(long start_time);
 
-int		check_numarg(char *argv);
-char	*check_scheduler(char *argv);
+int			check_numarg(char *argv);
+char		*check_scheduler(char *argv);
+int			request_before(t_hub *hub, t_request *a, t_request *b);
+void		swap_request(t_request *a, t_request *b);
 
-void	destroy_dongles(t_hub *hub, int i);
-void	destroy_coders(t_hub *hub, int i);
+void		destroy_dongles(t_hub *hub, int i);
+void		destroy_coders(t_hub *hub, int i);
 
 #endif

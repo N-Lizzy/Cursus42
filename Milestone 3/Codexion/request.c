@@ -50,18 +50,6 @@ int	is_my_turn(t_coder *coder)
 	return (hub->heap.data[0].coder == coder);
 }
 
-int	wait_for_turn(t_coder *coder)
-{
-	t_hub	*hub;
-
-	hub = coder->hub;
-	pthread_mutex_lock(&hub->smutex);
-	while (!is_my_turn(coder) && !hub->status)
-		pthread_cond_wait(&hub->scond, &hub->smutex);
-	pthread_mutex_unlock(&hub->smutex);
-	return (hub->status);
-}
-
 int	take_turn(t_coder *coder)
 {
 	t_hub		*hub;

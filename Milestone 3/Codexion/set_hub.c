@@ -62,7 +62,7 @@ int	set_dongles(t_hub *hub)
 	while (i < hub->num_coders)
 	{
 		hub->dongles[i].is_taken = 0;
-		hub->dongles[i].last_used = 0;
+		hub->dongles[i].last_used = -hub->tcooldown;;
 		if (pthread_mutex_init(&hub->dongles[i].dmutex, NULL))
 		{
 			destroy_dongles(hub, i);
@@ -92,6 +92,7 @@ int	set_arg(t_hub *hub, char **argv)
 		|| !hub->max_compiles || !hub->tcooldown || !hub->scheduler)
 		return (1);
 	hub->status = 0;
+	hub->request_order = 0;
 	return (0);
 }
 

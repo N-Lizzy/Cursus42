@@ -59,5 +59,9 @@ void	swap_request(t_request *a, t_request *b)
 	*b = tmp;
 }
 
-
-
+void	log_state(t_hub *hub, int id, char *msg)
+{
+	pthread_mutex_lock(&hub->wmutex);
+	printf("%ld %d %s\n", get_time(hub->htime), id, msg);
+	pthread_mutex_unlock(&hub->wmutex);
+}
