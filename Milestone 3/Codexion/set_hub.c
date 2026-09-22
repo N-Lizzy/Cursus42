@@ -18,6 +18,7 @@ int	set_coder(t_hub *hub, int i)
 	hub->coders[i].hub = hub;
 	hub->coders[i].last_compile = 0;
 	hub->coders[i].compiles = 0;
+	hub->coders[i].state = ST_IDLE;
 	if (!i)
 		hub->coders[i].left_dongle = &hub->dongles[hub->num_coders - 1];
 	else
@@ -62,7 +63,7 @@ int	set_dongles(t_hub *hub)
 	while (i < hub->num_coders)
 	{
 		hub->dongles[i].is_taken = 0;
-		hub->dongles[i].last_used = -hub->tcooldown;;
+		hub->dongles[i].last_used = -hub->tcooldown;
 		if (pthread_mutex_init(&hub->dongles[i].dmutex, NULL))
 		{
 			destroy_dongles(hub, i);
@@ -88,7 +89,7 @@ int	set_arg(t_hub *hub, char **argv)
 	hub->tcooldown = atoi(argv[7]);
 	hub->scheduler = check_scheduler(argv[8]);
 	if (hub->num_coders > 500 || !hub->num_coders || !hub->tburnout
-		|| !hub-> tcompile || !hub->tdebug || !hub->trefactor
+		|| !hub->tcompile || !hub->tdebug || !hub->trefactor
 		|| !hub->max_compiles || !hub->tcooldown || !hub->scheduler)
 		return (1);
 	hub->status = 0;

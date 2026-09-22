@@ -20,6 +20,11 @@
 # include <sys/time.h>
 # include <unistd.h>
 
+# define ST_IDLE     0
+# define ST_COMPILE  1
+# define ST_DEBUG    2
+# define ST_REFACTOR 3
+
 typedef struct s_dongle
 {
 	int				is_taken;
@@ -30,6 +35,7 @@ typedef struct s_dongle
 typedef struct s_coder
 {
 	int				id;
+	int				state;
 	struct s_hub	*hub;
 	long			last_compile;
 	long			compiles;
@@ -65,6 +71,7 @@ typedef struct s_hub
 	long			max_compiles;
 	char			*scheduler;
 	pthread_t		*threads;
+	pthread_t		monitor;
 	t_coder			*coders;
 	t_dongle		*dongles;
 	long			request_order;
@@ -90,10 +97,10 @@ int			heap_pop(t_hub *hub, t_request *request);
 
 t_request	make_request(t_hub *hub, t_coder *coder);
 int			request_compile(t_coder *coder);
-int			is_my_turn(t_coder *coder); 
+int			is_my_turn(t_coder *coder);
 int			take_turn(t_coder *coder);
+int			acquire_dongles(t_coder *coder);
 
-int			take_dongles(t_coder *coder);
 int			release_dongles(t_coder *coder);
 long		get_time(long start_time);
 
@@ -104,5 +111,9 @@ void		swap_request(t_request *a, t_request *b);
 
 void		destroy_dongles(t_hub *hub, int i);
 void		destroy_coders(t_hub *hub, int i);
+
+void		*coder_routine(void *arg);
+void		*monitor_routine(void *arg);
+void		destroy_hub(t_hub *hub);
 
 #endif

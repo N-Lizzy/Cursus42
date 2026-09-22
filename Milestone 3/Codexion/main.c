@@ -27,30 +27,60 @@
 
 #include "codexion.h"
 
+static int	run_simulation(t_hub *hub)
+{
+	int	i;
+
+	i = 0;
+	while (i < hub->num_coders)
+	{
+		if (pthread_create(&hub->threads[i], NULL, &coder_routine,
+				&hub->coders[i]))
+		{
+			hub->status = 1;
+			pthread_cond_broadcast(&hub->scond);
+			while (--i >= 0)
+				pthread_join(hub->threads[i], NULL);
+			return (1);
+		}
+		i++;
+	}
+	if (pthread_create(&hub->monitor, NULL, &monitor_routine, hub))
+	{
+		hub->status = 1;
+		pthread_cond_broadcast(&hub->scond);
+		i = hub->num_coders;
+		while (--i >= 0)
+			pthread_join(hub->threads[i], NULL);
+		return (1);
+	}
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_hub	hub;
 	int		i;
 
-	i = 0;
 	if (argc != 9)
 		return (1);
 	if (set_hub(&hub, argv))
 		return (1);
 	hub.htime = get_time(0);
+	if (run_simulation(&hub))
+	{
+		destroy_hub(&hub);
+		return (1);
+	}
+	pthread_join(hub.monitor, NULL);
+	i = 0;
 	while (i < hub.num_coders)
 	{
-		//if(pthread_create(&hub.threads[i], NULL, &coder_routine, &hub.coders[i]))
-			// Return limpieza
+		pthread_join(hub.threads[i], NULL);
 		i++;
 	}
-	// Checkeo
-	i = 0;
-	while(i < hub.num_coders)
-	{
-		if(pthread_join(hub.threads[i], NULL))
-		i++;
-	}
-	// Limpieza
+	destroy_hub(&hub);
 	return (0);
 }
+
+

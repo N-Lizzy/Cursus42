@@ -26,4 +26,13 @@ void	destroy_coders(t_hub *hub, int i)
 	free(hub->coders);
 }
 
-
+void	destroy_hub(t_hub *hub)
+{
+	pthread_mutex_destroy(&hub->smutex);
+	pthread_mutex_destroy(&hub->wmutex);
+	pthread_cond_destroy(&hub->scond);
+	free(hub->heap.data);
+	destroy_coders(hub, hub->num_coders);
+	destroy_dongles(hub, hub->num_coders);
+	free(hub->threads);
+}

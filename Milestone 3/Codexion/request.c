@@ -50,22 +50,43 @@ int	is_my_turn(t_coder *coder)
 	return (hub->heap.data[0].coder == coder);
 }
 
+static void	set_wait_time(struct timespec *ts)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	ts->tv_sec = tv.tv_sec;
+	ts->tv_nsec = tv.tv_usec * 1000 + 1000000;
+	if (ts->tv_nsec >= 1000000000)
+	{
+		ts->tv_sec++;
+		ts->tv_nsec -= 1000000000;
+	}
+}
+
 int	take_turn(t_coder *coder)
 {
-	t_hub		*hub;
-	t_request	request;
+	t_hub			*hub;
+	t_request		request;
+	struct timespec	ts;
 
 	hub = coder->hub;
 	pthread_mutex_lock(&hub->smutex);
-	while (!is_my_turn(coder) && !hub->status)
-		pthread_cond_wait(&hub->scond, &hub->smutex);
-	if (hub->status)
+	while (!hub->status)
 	{
-		pthread_mutex_unlock(&hub->smutex);
-		return (1);
+		if (is_my_turn(coder) && acquire_dongles(coder))
+		{
+			heap_pop(hub, &request);
+			pthread_cond_broadcast(&hub->scond);
+			pthread_mutex_unlock(&hub->smutex);
+			log_state(hub, coder->id, "has taken a dongle");
+			if (coder->left_dongle != coder->right_dongle)
+				log_state(hub, coder->id, "has taken a dongle");
+			return (0);
+		}
+		set_wait_time(&ts);
+		pthread_cond_timedwait(&hub->scond, &hub->smutex, &ts);
 	}
-	heap_pop(hub, &request);
-	pthread_cond_broadcast(&hub->scond);
 	pthread_mutex_unlock(&hub->smutex);
-	return (0);
+	return (1);
 }

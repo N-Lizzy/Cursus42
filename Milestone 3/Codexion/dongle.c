@@ -25,27 +25,14 @@ int	take_dongles(t_coder *coder)
 	long	now;
 
 	hub = coder->hub;
-	while (!hub->status)
+	now = get_time(hub->htime);
+	if (!try_take(coder->left_dongle, now, hub->tcooldown))
+		return (0);
+	if (coder->left_dongle == coder->right_dongle)
+		return (1);
+	if (!try_take(coder->right_dongle, now, hub->tcooldown))
 	{
-		now = get_time(hub->htime);
-		if (!try_take(coder->left_dongle, now, hub->tcooldown))
-		{
-			usleep(200);
-			continue ;
-		}
-		if (coder->left_dongle == coder->right_dongle)
-		{
-			log_state(hub, coder->id, "has taken a dongle");
-			return (0);
-		}
-		if (!try_take(coder->right_dongle, now, hub->tcooldown))
-		{
-			give_back(coder->left_dongle);
-			usleep(200);
-			continue ;
-		}
-		log_state(hub, coder->id, "has taken a dongle");
-		log_state(hub, coder->id, "has taken a dongle");
+		give_back(coder->left_dongle);
 		return (0);
 	}
 	return (1);
